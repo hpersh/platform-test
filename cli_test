@@ -1,0 +1,21 @@
+#!/bin/bash
+
+function run_cmd {
+    echo
+    echo ==== $*
+    $*
+}
+
+run_cmd show platform fanstatus
+run_cmd show platform psustatus
+run_cmd show platform psusummary
+run_cmd show platform ssdhealth
+run_cmd show platform summary
+run_cmd show platform syseeprom
+run_cmd show platform temperature
+run_cmd show environment
+run_cmd show environment
+run_cmd platform_sensors.py
+run_cmd fanshow -s
+run_cmd psushow -s
+

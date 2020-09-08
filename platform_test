@@ -1,0 +1,36 @@
+#!/bin/bash
+
+progname=$(basename $0)
+
+options=''
+while [[ $# -gt 0 ]]
+do
+    case $1 in
+        -*) options="$options $1"
+            shift
+            ;;
+        *)
+            break
+    esac
+done
+if [[ $# -ne 1 ]]
+then
+    echo "usage: $progname [-q] [-v] <platform>"
+    exit 1
+fi
+platform=$1
+
+result=0
+function failed {
+    result=1
+}
+
+./chassis_test.py $options || failed
+./component_test.py $options $platform || failed
+./eeprom_test.py $options $platform || failed
+./fan_test.py $options $platform || failed
+./psu_test.py $options $platform || failed
+./sfp_test.py $options $platform || failed
+./thermal_test.py $options $platform || failed
+
+exit $result
